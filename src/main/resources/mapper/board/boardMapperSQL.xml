@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rest.neo.board.mapper.BoardMapper">
+
+	<select id="selectBoardListCnt" parameterType="Board" resultType="int">
+		SELECT
+				COUNT(*) AS TOTCNT
+		FROM
+				T_BOARD
+		<where>
+			<if test="title != null and title != ''">
+				AND TITLE LIKE '%' #{title} '%'
+			</if>
+		</where>
+	</select>
+
+	<select id="selectBoardList" parameterType="Board" resultType="Board">
+		SELECT
+				BOARD_IDX
+				, TITLE
+				, CONTENTS
+				, HIT_CNT
+				, REG_ID
+				, DATE_FORMAT(REG_DATE, '%Y-%m-%d') AS REG_DATE
+				, MOD_ID
+				, DATE_FORMAT(MOD_DATE, '%Y-%m-%d') AS MOD_DATE
+		FROM
+				T_BOARD
+		<where>
+			<if test="title != null and title != ''">
+				AND TITLE LIKE '%' #{title} '%'
+			</if>
+		</where>
+	</select>
+
+	<select id="selectBoard" parameterType="Board" resultType="Board">
+		SELECT
+				BOARD_IDX
+				, TITLE
+				, CONTENTS
+				, HIT_CNT
+				, REG_ID
+				, REG_DATE
+				, MOD_ID
+				, MOD_DATE
+		FROM
+				T_BOARD
+		WHERE
+				BOARD_IDX = #{boardIdx}
+	</select>
+
+	<select id="selectBoardCnt" parameterType="Integer" resultType="Integer">
+		SELECT
+			COUNT(*) AS TOTCNT
+		FROM
+			T_BOARD
+		WHERE
+			BOARD_IDX = #{boardIdx}
+	</select>
+
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO T_BOARD
+			(
+				TITLE
+				, CONTENTS
+				, DISPLAY_YN
+				, REG_ID
+				, REG_DATE
+			)
+			VALUES
+			(
+				#{title}
+				, #{contents}
+				, #{displayYn}
+				, 'admin'
+				, NOW()
+			)
+	</insert>
+
+	<update id="updateBoard" parameterType="Board">
+		UPDATE T_BOARD SET
+			TITLE = #{title}
+			, CONTENTS = #{contents}
+			, DISPLAY_YN = #{displayYn}
+			, MOD_ID = 'admin'
+			, MOD_DATE = NOW()
+		WHERE
+			BOARD_IDX = #{boardIdx}
+	</update>
+
+	<delete id="deleteBoard" parameterType="Board">
+		DELETE FROM T_BOARD
+		WHERE BOARD_IDX = #{boardIdx}
+	</delete>
+
+    <insert id="insertBoardSelectKey" parameterType="Board" useGeneratedKeys="true" keyProperty="boardIdx">
+		INSERT INTO T_BOARD
+			(
+				TITLE
+				, CONTENTS
+				, DISPLAY_YN
+				, REG_ID
+				, REG_DATE
+			)
+			VALUES
+			(
+				#{title}
+				, #{contents}
+				, #{displayYn}
+				, 'admin'
+				, NOW()
+			)
+	</insert>
+
+</mapper>
