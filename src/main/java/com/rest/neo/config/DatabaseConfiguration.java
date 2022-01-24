@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@PropertySource("classpath:application.properties")
+//@PropertySource("classpath:application.properties")
 @Slf4j
 public class DatabaseConfiguration {
 

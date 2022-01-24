@@ -7,7 +7,7 @@
 		SELECT
 				COUNT(*) AS TOTCNT
 		FROM
-				T_BOARD
+				BOARD
 		<where>
 			<if test="title != null and title != ''">
 				AND TITLE LIKE '%' #{title} '%'
@@ -26,7 +26,7 @@
 				, MOD_ID
 				, DATE_FORMAT(MOD_DATE, '%Y-%m-%d') AS MOD_DATE
 		FROM
-				T_BOARD
+				BOARD
 		<where>
 			<if test="title != null and title != ''">
 				AND TITLE LIKE '%' #{title} '%'
@@ -45,7 +45,7 @@
 				, MOD_ID
 				, MOD_DATE
 		FROM
-				T_BOARD
+				BOARD
 		WHERE
 				BOARD_IDX = #{boardIdx}
 	</select>
@@ -54,13 +54,13 @@
 		SELECT
 			COUNT(*) AS TOTCNT
 		FROM
-			T_BOARD
+			BOARD
 		WHERE
 			BOARD_IDX = #{boardIdx}
 	</select>
 
 	<insert id="insertBoard" parameterType="Board">
-		INSERT INTO T_BOARD
+		INSERT INTO BOARD
 			(
 				TITLE
 				, CONTENTS
@@ -79,7 +79,7 @@
 	</insert>
 
 	<update id="updateBoard" parameterType="Board">
-		UPDATE T_BOARD SET
+		UPDATE BOARD SET
 			TITLE = #{title}
 			, CONTENTS = #{contents}
 			, DISPLAY_YN = #{displayYn}
@@ -90,12 +90,12 @@
 	</update>
 
 	<delete id="deleteBoard" parameterType="Board">
-		DELETE FROM T_BOARD
+		DELETE FROM BOARD
 		WHERE BOARD_IDX = #{boardIdx}
 	</delete>
 
     <insert id="insertBoardSelectKey" parameterType="Board" useGeneratedKeys="true" keyProperty="boardIdx">
-		INSERT INTO T_BOARD
+		INSERT INTO BOARD
 			(
 				TITLE
 				, CONTENTS
