@@ -1,7 +1,14 @@
 spring:
+  application:
+    name: neo-client
   profiles:
     active: dev
   cloud:
     config:
       uri: http://localhost:8888 #Config Server uri
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
